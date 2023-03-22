@@ -1,52 +1,35 @@
 // Add imports above this line
 import { galleryItems } from './gallery-items';
+import SimpleLightbox from "simplelightbox";
+import  'simplelightbox/dist/simple-lightbox.min.css';
+
+
+
 // Change code below this line
 
-console.log(galleryItems);
+
 
 const gallaryList = document.querySelector('.gallery');
 
 
-gallaryList.innerHTML = createList();
+function makeGallarylist() {
+return galleryItems.map(
+    ({preview, original, description}) => 
+`<a class="gallery__item" href="${original}">
+<img class="gallery__image" src="${preview}" alt="${description}" />
+</a>`
+).join('');
 
+}
+gallaryList.innerHTML = makeGallarylist();
 
+gallaryList.addEventListener('click', openModalWindow);
 
-
-function createList() {
-  return galleryItems.map(
-    ({description, original,preview}) => {
- return   `<div class="gallery__item">
-    <a class="gallery__link" href="large-image.jpg">
-      <img
-        class="gallery__image"
-        src="${preview}"
-        data-source="${original}"
-        alt="${description}"
-      />
-    </a>
-  </div>`
-}).join('')}
-console.log(createList());
-  gallaryList.addEventListener('click', onGallaryClick);
-
-
-
-function onGallaryClick(e) {
-    e.preventDefault();
+function openModalWindow(e) {
+  e.preventDefault();
   if (e.target.nodeName !== 'IMG') {
     return;
   }
+  let lightbox = new SimpleLightbox('.gallery a', { captionDelay: 250, captionsData: "alt"})
 
-  const instance = basicLightbox.create(`
-  <div class="modal">
-  <img src="${e.target.dataset.source}" alt="${e.target.alt}">
-  </div>
-`)
-instance.show()
-gallaryList.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape') {
-    instance.close();
-  }
-   });
-
-  }
+}
