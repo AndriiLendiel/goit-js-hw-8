@@ -23,13 +23,5 @@ return galleryItems.map(
 }
 gallaryList.innerHTML = makeGallarylist();
 
-gallaryList.addEventListener('click', openModalWindow);
-
-function openModalWindow(e) {
-  e.preventDefault();
-  if (e.target.nodeName !== 'IMG') {
-    return;
-  }
   let lightbox = new SimpleLightbox('.gallery a', { captionDelay: 250, captionsData: "alt"})
 
-}
